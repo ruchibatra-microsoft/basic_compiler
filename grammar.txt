@@ -1,0 +1,66 @@
+<program> ===> PROGRAM OP CL COP <stmts> CCL
+<stmts> ===> <stmt> <more_stmts>
+<stmts> ===> EPSILON
+<more_stmts> ===> <stmts>
+<more_stmts> ===> EPSILON
+<stmt> ===> <decl>
+<stmt> ===> <assign>
+<decl> ===> DEC <declaration>
+<declaration> ===> ID COLON <type> 
+<declaration> ===> LIST OF VARIABLES <var_list> COLON <type>
+<var_list> ===> ID <remaining_var>
+<remaining_var> ===> <var_list>
+<remaining_var> ===> EPSILON
+<type> ===> <array>
+<type> ===> <primitive> SEMICOLON
+<primitive> ===> INT
+<primitive> ===> REAL
+<primitive> ===> BOOLEAN
+<array> ===> <rectangular>
+<array> ===> <jagged>
+<rectangular> ===> ARRAY <arr_dims> OF INT SEMICOLON
+<arr_dims> ===> <arr_dim> <more_arr_dims>
+<more_arr_dims> ===> EPSILON
+<more_arr_dims> ===> <arr_dims>
+<arr_dim> ===> SQOP <range> DOTS <range> SQCL
+<range> ===> ID
+<range> ===> NUM
+<jagged> ===> JAGGED ARRAY SQOP <low> DOTS <high> SQCL SQOP SQCL <op_dim> OF INT SEMICOLON <rows_dec_R1>
+<op_dim> ===> SQOP SQCL
+<op_dim> ===> EPSILON
+<low> ===> NUM
+<high> ===> NUM
+<rows_dec_R1> ===> R SQOP NUM SQCL COLON SZ NUM COLON VALUES COP <rowjj> CCL <rows_dec_R1> 
+<rows_dec_R1> ===> EPSILON
+<rowjj> ===> <rowj> <more_rowjj> 
+<more_rowjj> ===> SEMICOLON <rowjj>
+<more_rowjj> ===> EPSILON
+<rowj> ===> NUM <more_rowj>
+<more_rowj> ===> <rowj>
+<more_rowj> ===> EPSILON
+<assign> ===> ID <array_op> EQUALS <expression> SEMICOLON
+<expression> ===> <expression_arith>
+<expression> ===> <expression_bool>
+<expression_arith> ===> <term> <op_plus_minus>
+<op_plus_minus> ===> PLUS <expression_arith>
+<op_plus_minus> ===> MINUS <expression_arith>
+<op_plus_minus> ===> EPSILON
+<term> ===> <factor> <op_mul_div>
+<op_mul_div> ===> MUL <term>
+<op_mul_div> ===> DIV <term>
+<op_mul_div> ===> EPSILON
+<factor> ===> ID <array_op>
+<factor> ===> NUM
+<array_op> ===> SQOP <ind_list> SQCL 
+<array_op> ===> EPSILON
+<ind_list> ===> ID <more_ind_list>
+<ind_list> ===> NUM <more_ind_list>
+<more_ind_list> ===> <ind_list>
+<more_ind_list> ===> EPSILON
+<expression_bool> ===> <term_bool> <op_no_op_or>
+<op_no_op_or> ===> OR <expression_bool>
+<op_no_op_or> ===> EPSILON
+<term_bool> ===> <factor_bool> <op_no_op_and>
+<op_no_op_and> ===> AND <factor_bool>
+<op_no_op_and> ===> EPSILON
+<factor_bool> ===> ID
